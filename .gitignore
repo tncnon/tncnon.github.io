@@ -1,0 +1,4 @@
+backups/
+.claude/
+*.tmp
+__pycache__/

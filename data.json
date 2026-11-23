@@ -1,0 +1,98 @@
+{
+  "profile": {
+    "firstName": "Tanachot",
+    "lastName": "Kiewnoi",
+    "nickname": "NON",
+    "eyebrow": "Available for freelance · Bangkok, TH",
+    "roles": ["Video Editor", "Graphic Designer", "Content Creator"],
+    "quote": "\"Work until your bank account looks like a phone number.\"",
+    "quoteTh": "ทำงานจนกว่ายอดเงินในบัญชีจะคล้ายกับเบอร์โทรศัพท์ของคุณ",
+    "about": "สวัสดีครับ ผม [[นนท์]] — ตัดต่อวิดีโอที่ทำให้คนดู{{ไม่อยากกดข้าม}} และออกแบบกราฟิกที่[[หยุดนิ้ว]]ตอนเลื่อนฟีด",
+    "aboutSub": "มีประสบการณ์ตัดต่อคลิปข่าว รายการ และภาพยนตร์ให้ช่อง MONO29 รวมถึงรายการรีวิวอาหาร \"Eat Around\" ของช่อง Starvingtime ถนัดงานจังหวะเร็ว เล่าเรื่องให้สนุก และทำงานทันเดดไลน์โซเชียลมีเดีย",
+    "experienceIntro": "Behind the timeline of broadcast TV and one of Thailand's food channels on YouTube.",
+    "videoIntro": "คลิกเพื่อดูวิดีโอได้เลย — จากรายการรีวิวอาหาร วล็อกท่องเที่ยว ไปจนถึงงานโฆษณา",
+    "graphicIntro": "โปสเตอร์ ปกคลิป และสื่อโซเชียล — คลิกที่รูปเพื่อดูขนาดเต็ม",
+    "contactText": "มีโปรเจกต์ตัดต่อหรืองานกราฟิก? ทักมาคุยกันได้เลยครับ"
+  },
+  "marquee1": ["Video Editing", "Motion", "Graphic Design", "Storytelling", "Thumbnails", "Social Content"],
+  "marquee2": ["Premiere", "After Effects", "Photoshop", "Illustrator", "Color Grade", "Sound Design"],
+  "socials": [
+    {"type": "facebook", "label": "Facebook", "url": "https://www.facebook.com/Tanachot.16"},
+    {"type": "instagram", "label": "@tncnon", "url": "https://www.instagram.com/tncnon/"},
+    {"type": "line", "label": "LINE", "url": "https://line.me/ti/p/f1EoLm9WC1"}
+  ],
+  "tools": [
+    {"name": "Premiere Pro", "abbr": "Pr", "bg": "#2a0a4a", "fg": "#9999ff"},
+    {"name": "After Effects", "abbr": "Ae", "bg": "#1a0a3a", "fg": "#d291ff"},
+    {"name": "Photoshop", "abbr": "Ps", "bg": "#001e36", "fg": "#31a8ff"},
+    {"name": "Illustrator", "abbr": "Ai", "bg": "#330000", "fg": "#ff9a00"},
+    {"name": "CapCut", "abbr": "Cc", "bg": "#111111", "fg": "#ffffff"},
+    {"name": "Canva", "abbr": "Cv", "bg": "#00c4cc", "fg": "#ffffff"}
+  ],
+  "experience": [
+    {
+      "company": "Mono Broadcast Co., Ltd.",
+      "role": "Video Editor",
+      "type": "Contract",
+      "months": 12,
+      "desc": "ตัดต่อคลิปรายการข่าวและภาพยนตร์ เพื่อลงโซเชียลมีเดียของช่อง MONO29",
+      "logo": "assets/logo-mono.png",
+      "link": "https://www.youtube.com/@Mono29tv/videos"
+    },
+    {
+      "company": "MOVF Media Group Co., Ltd.",
+      "role": "Video Editor",
+      "type": "Internship",
+      "months": 4,
+      "desc": "ตัดต่อคลิปตามที่ได้รับมอบหมายให้ช่อง YouTube \"Starvingtime\" (เรื่องกินเรื่องใหญ่) รวมถึงซีรีส์ Eat Around",
+      "logo": "assets/logo-movf.jpg",
+      "link": "https://www.youtube.com/@Starvingtime/videos"
+    }
+  ],
+  "videoCategories": [
+    {"id": "food", "label": "Food Review"},
+    {"id": "vlog", "label": "Vlog"},
+    {"id": "ads", "label": "Commercial"}
+  ],
+  "videos": [
+    {"source": "youtube", "id": "UwN-iro-Tb0", "title": "หมูกรอบยืนหนึ่ง! กรอบนอกนุ่มใน ร้านเด็ดย่านพุทธบูชา!! | Eat Around EP. 395", "duration": "10:06", "category": "food", "featured": true},
+    {"source": "youtube", "id": "5fS27NQdbOQ", "title": "แซ่บอีหลี! ย่างก้อยกลางทองหล่อ 60 บาท ทุกเมนู !!! | Eat Around EP. 399", "duration": "11:50", "category": "food"},
+    {"source": "youtube", "id": "ZPiF76xDkcI", "title": "เด็ดจนต้องเบิ้ล! ข้าวต้มกุ๊ยสุขวัสดิ์ จัดจ้าน ถึงเครื่อง! | Eat Around EP. 414", "duration": "09:33", "category": "food"},
+    {"source": "youtube", "id": "lTgkfJ_nLp8", "title": "รวมร้านเด็ดครบทั้งคาวหวาน! ย่านสะพานควาย | Eat Around EP. 393", "duration": "12:47", "category": "food"},
+    {"source": "youtube", "id": "Dn-1uQZdT7I", "title": "SupSip | Vlog ซุบซิบเยือนเกาะล้าน เรือจะจมไหม!", "duration": "25:48", "category": "vlog"},
+    {"source": "youtube", "id": "Umm_0-Lx8nw", "title": "SupSip | Vlog กลับมาแบบจัดเต็ม เพราะพี่เล่นทุกกิจกรรม!", "duration": "11:03", "category": "vlog"},
+    {"source": "youtube", "id": "GCex7IvFcsA", "title": "SupSip | Vlog โซฟาตัวร้าย ส่งท้ายเพื่อนพ้อง !", "duration": "32:43", "category": "vlog"},
+    {"source": "youtube", "id": "vp5kawBGq2A", "title": "SupSip | Vlog เที่ยวปีที่แล้วลงคลิปปีนี้ !", "duration": "08:56", "category": "vlog"},
+    {"source": "youtube", "id": "cSu371gn2_I", "title": "SupSip | รู้ทุกเรื่องยกเว้นเรื่องจริงง !", "duration": "11:29", "category": "vlog"},
+    {"source": "youtube", "id": "cW2UbMqhtIY", "title": "SupSip | Vlog ครั้งแรกเพราะที่ผ่านมาลืมถ่าย...", "duration": "09:18", "category": "vlog"},
+    {"source": "link", "url": "https://www.facebook.com/promaibusiness/videos/1319732359330977/", "thumb": "assets/fb-shopee.jpg", "title": "SHOPEE IDOL SELLER", "duration": "03:35", "category": "ads"},
+    {"source": "link", "url": "https://www.facebook.com/promaibusiness/videos/1208156207298122", "thumb": "assets/fb-yuttana.jpg", "title": "k'Yuttana SP IDOL SELLER", "duration": "00:37", "category": "ads"}
+  ],
+  "graphics": [
+    {"full": "assets/works/01.jpg", "thumb": "assets/thumbs/01.jpg", "title": ""},
+    {"full": "assets/works/02.jpg", "thumb": "assets/thumbs/02.jpg", "title": ""},
+    {"full": "assets/works/03.jpg", "thumb": "assets/thumbs/03.jpg", "title": ""},
+    {"full": "assets/works/04.jpg", "thumb": "assets/thumbs/04.jpg", "title": ""},
+    {"full": "assets/works/05.jpg", "thumb": "assets/thumbs/05.jpg", "title": ""},
+    {"full": "assets/works/06.png", "thumb": "assets/thumbs/06.png", "title": ""},
+    {"full": "assets/works/07.jpg", "thumb": "assets/thumbs/07.jpg", "title": ""},
+    {"full": "assets/works/08.jpg", "thumb": "assets/thumbs/08.jpg", "title": ""},
+    {"full": "assets/works/09.jpg", "thumb": "assets/thumbs/09.jpg", "title": ""},
+    {"full": "assets/works/10.png", "thumb": "assets/thumbs/10.png", "title": ""},
+    {"full": "assets/works/11.jpg", "thumb": "assets/thumbs/11.jpg", "title": ""},
+    {"full": "assets/works/12.jpg", "thumb": "assets/thumbs/12.jpg", "title": ""},
+    {"full": "assets/works/13.jpg", "thumb": "assets/thumbs/13.jpg", "title": ""},
+    {"full": "assets/works/14.png", "thumb": "assets/thumbs/14.png", "title": ""},
+    {"full": "assets/works/15.jpg", "thumb": "assets/thumbs/15.jpg", "title": ""},
+    {"full": "assets/works/16.jpg", "thumb": "assets/thumbs/16.jpg", "title": ""},
+    {"full": "assets/works/17.jpg", "thumb": "assets/thumbs/17.jpg", "title": ""},
+    {"full": "assets/works/18.png", "thumb": "assets/thumbs/18.png", "title": ""},
+    {"full": "assets/works/19.png", "thumb": "assets/thumbs/19.png", "title": ""},
+    {"full": "assets/works/20.png", "thumb": "assets/thumbs/20.png", "title": ""},
+    {"full": "assets/works/21.png", "thumb": "assets/thumbs/21.png", "title": ""},
+    {"full": "assets/works/22.png", "thumb": "assets/thumbs/22.png", "title": ""},
+    {"full": "assets/works/23.png", "thumb": "assets/thumbs/23.png", "title": ""},
+    {"full": "assets/works/24.png", "thumb": "assets/thumbs/24.png", "title": ""},
+    {"full": "assets/works/25.png", "thumb": "assets/thumbs/25.png", "title": ""}
+  ]
+}

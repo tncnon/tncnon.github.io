@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio Admin</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0d;--bg2:#141418;--bg3:#1c1c22;--line:#2a2a32;--fg:#f4f2ee;--mute:#9a98a3;--acc:#c8ff2e;--red:#ff4d2e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:'Prompt',system-ui,sans-serif;font-size:14px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:14px 20px;background:rgba(11,11,13,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{font-family:Anton,sans-serif;font-size:22px;letter-spacing:.5px}
+.brand span{color:var(--acc)}
+.sp{flex:1}
+.status{color:var(--mute);font-size:13px}
+.status.dirty{color:var(--acc)}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--bg2);padding:8px 16px;border-radius:99px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:.15s}
+.btn:hover{border-color:var(--fg)}
+.btn.pri{background:var(--acc);color:#000;border-color:var(--acc);font-weight:600}
+.btn.pri:disabled{opacity:.35;cursor:default}
+.btn.sm{padding:5px 12px;font-size:13px}
+.btn.danger:hover{border-color:var(--red);color:var(--red)}
+.icon{width:32px;height:32px;padding:0;justify-content:center;border-radius:9px}
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 61px)}
+aside{border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:4px;position:sticky;top:61px;height:calc(100vh - 61px)}
+aside button{text-align:left;background:none;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;color:var(--mute);display:flex;justify-content:space-between}
+aside button:hover{background:var(--bg2);color:var(--fg)}
+aside button.on{background:var(--bg3);color:var(--fg)}
+aside button small{color:var(--mute);font-size:12px}
+aside .hint{margin-top:auto;font-size:12px;color:var(--mute);padding:10px}
+main{padding:28px clamp(16px,3vw,40px) 80px;max-width:1100px;width:100%}
+h1{font-family:Anton,sans-serif;font-weight:400;font-size:34px;letter-spacing:.5px;text-transform:uppercase}
+.sub{color:var(--mute);margin:4px 0 24px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start}
+.card.new{border-color:var(--acc);animation:flash 1.2s}
+@keyframes flash{from{box-shadow:0 0 0 4px rgba(200,255,46,.35)}}
+.thumb{width:160px;aspect-ratio:16/9;border-radius:10px;background:var(--bg3) center/cover no-repeat;display:grid;place-items:center;color:var(--mute);font-size:12px;overflow:hidden;position:relative}
+.thumb.sq{width:90px;aspect-ratio:1;background-size:contain;background-color:#fff}
+.thumb .up{position:absolute;inset:auto 6px 6px auto}
+.fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px 12px}
+.f{display:flex;flex-direction:column;gap:4px}
+.f.wide{grid-column:1/-1}
+.f label{font-size:12px;color:var(--mute)}
+.f input[type=text],.f input[type=number],.f input[type=url],.f select,.f textarea{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 10px;width:100%;outline:none}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--acc)}
+.f textarea{resize:vertical;min-height:64px}
+.f.check{flex-direction:row;align-items:center;gap:8px;padding-top:20px}
+.f.check input{width:18px;height:18px;accent-color:var(--acc)}
+.f input[type=color]{width:100%;height:38px;border:1px solid var(--line);border-radius:9px;background:var(--bg);padding:3px}
+.acts{display:flex;flex-direction:column;gap:6px}
+.empty{color:var(--mute);padding:30px;text-align:center;border:1px dashed var(--line);border-radius:16px}
+.panel{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:20px}
+.panel h3{font-weight:500;margin-bottom:12px;font-size:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+.row .f{flex:1;min-width:200px}
+.drop{border:2px dashed var(--line);border-radius:16px;padding:28px;text-align:center;color:var(--mute);cursor:pointer;transition:.15s;margin-bottom:18px}
+.drop:hover,.drop.over{border-color:var(--acc);color:var(--fg);background:rgba(200,255,46,.04)}
+.drop b{color:var(--acc)}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.gcell{background:var(--bg2);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.gcell .img{aspect-ratio:1;background:#222 center/cover no-repeat}
+.gcell .bar{display:flex;gap:4px;padding:6px;justify-content:space-between}
+.gcell input{background:var(--bg);border:0;border-top:1px solid var(--line);padding:7px 9px;font-size:12px;outline:none}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--fg);color:#000;padding:12px 20px;border-radius:12px;font-weight:500;transition:.3s;z-index:99;max-width:90vw}
+.toast.show{transform:translateX(-50%)}
+.toast.err{background:var(--red)}
+.offline{background:var(--red);color:#000;padding:12px 20px;font-weight:500;display:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;gap:6px;align-items:center;background:var(--bg3);border:1px solid var(--line);border-radius:99px;padding:4px 6px 4px 12px}
+.chip input{background:none;border:0;outline:none;width:110px}
+.chip button{background:none;border:0;cursor:pointer;color:var(--mute);width:22px;height:22px;border-radius:50%}
+.chip button:hover{background:var(--red);color:#000}
+@media(max-width:760px){.layout{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}aside .hint{display:none}.card{grid-template-columns:1fr}.acts{flex-direction:row}.thumb{width:100%}}
+</style>
+</head>
+<body>
+<div class="offline" id="offline">⚠ ติดต่อ server ไม่ได้ — ต้องเปิดผ่าน start-admin.bat (หลังบ้านใช้ได้เฉพาะบนเครื่องคุณ)</div>
+<header>
+  <div class="brand">ADMIN<span>.</span></div>
+  <span class="status" id="status">กำลังโหลด…</span>
+  <div class="sp"></div>
+  <a class="btn" href="/" target="_blank">ดูเว็บ ↗</a>
+  <button class="btn pri" id="saveBtn" disabled>บันทึก</button>
+</header>
+<div class="layout">
+  <aside id="tabs"></aside>
+  <main id="main"></main>
+</div>
+<div class="toast" id="toast"></div>
+<input type="file" id="filePick" accept="image/*" hidden>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let D = null, dirty = false, tab = 'videos', lastNew = -1;
+
+/* ---------- helpers ---------- */
+function toast(msg, err){ const t=$('toast'); t.textContent=msg; t.className='toast show'+(err?' err':''); clearTimeout(t._h); t._h=setTimeout(()=>t.className='toast',2600); }
+function mark(){ dirty=true; $('saveBtn').disabled=false; $('status').textContent='● มีการแก้ไขที่ยังไม่บันทึก'; $('status').className='status dirty'; renderTabs(); }
+function src(p){ return !p ? '' : /^https?:/.test(p) ? p : '/' + p; }
+function ytId(u){ const m=String(u).match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/|\/live\/)([\w-]{11})/); return m ? m[1] : (/^[\w-]{11}$/.test(u)?u:null); }
+function fmtMonths(m){ m=+m||0; const y=Math.floor(m/12), r=m%12; return [y?`${y} ปี`:'', r?`${r} เดือน`:''].filter(Boolean).join(' ')||'—'; }
+function move(arr,i,d){ const j=i+d; if(j<0||j>=arr.length) return; [arr[i],arr[j]]=[arr[j],arr[i]]; mark(); render(); }
+function del(arr,i,what){ if(!confirm(`ลบ${what}นี้ใช่ไหม?`)) return; arr.splice(i,1); mark(); render(); }
+
+/* resize image in browser -> base64 */
+function loadImg(file){ return new Promise((ok,no)=>{ const u=URL.createObjectURL(file), im=new Image(); im.onload=()=>ok(im); im.onerror=no; im.src=u; }); }
+function resize(im, max, q){ const s=Math.min(1, max/Math.max(im.naturalWidth, im.naturalHeight)); const c=document.createElement('canvas'); c.width=Math.round(im.naturalWidth*s); c.height=Math.round(im.naturalHeight*s); c.getContext('2d').drawImage(im,0,0,c.width,c.height); return c.toDataURL('image/webp', q); }
+async function upload(folder, name, data){
+  const r = await fetch('/api/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({folder,name,data})});
+  const j = await r.json(); if(!r.ok) throw new Error(j.error||'upload failed'); return j.path;
+}
+async function uploadImage(file, folder, max=1200){
+  const im = await loadImg(file);
+  const base = file.name.replace(/\.[^.]+$/,'') + '.webp';
+  return upload(folder, base, resize(im, max, .86));
+}
+function pickFile(multiple=false){ return new Promise(ok=>{ const p=$('filePick'); p.multiple=multiple; p.value=''; p.onchange=()=>ok([...p.files]); p.click(); }); }
+
+/* generic field renderer: binds input -> obj[key] (via one delegated listener) */
+const BIND = new Map();
+document.addEventListener('input', e=>{ const fn = BIND.get(e.target.id); if(fn){ fn(e.target); mark(); } });
+function field(obj, key, label, type='text', opts={}){
+  const id = 'f'+Math.random().toString(36).slice(2,9);
+  const v = obj[key];
+  let input;
+  if(type==='textarea') input = `<textarea id="${id}">${esc(v)}</textarea>`;
+  else if(type==='select') input = `<select id="${id}">${opts.options.map(o=>`<option value="${esc(o.value)}" ${o.value==v?'selected':''}>${esc(o.label)}</option>`).join('')}</select>`;
+  else if(type==='check') input = `<input type="checkbox" id="${id}" ${v?'checked':''}>`;
+  else input = `<input type="${type}" id="${id}" value="${esc(v)}" placeholder="${esc(opts.ph||'')}">`;
+  BIND.set(id, el=>{ obj[key] = type==='number' ? (el.value===''?'':+el.value) : type==='check' ? el.checked : el.value; });
+  if(type==='check') return `<div class="f check ${opts.wide?'wide':''}">${input}<label for="${id}">${esc(label)}</label></div>`;
+  return `<div class="f ${opts.wide?'wide':''}"><label for="${id}">${esc(label)}</label>${input}${opts.help?`<small style="color:var(--mute);font-size:11px">${opts.help}</small>`:''}</div>`;
+}
+
+/* ---------- tabs ---------- */
+const TABS = [
+  {id:'videos', label:'🎬 ผลงานวิดีโอ', count:()=>D.videos.length},
+  {id:'graphics', label:'🎨 ผลงานกราฟิก', count:()=>D.graphics.length},
+  {id:'experience', label:'💼 Work History', count:()=>D.experience.length},
+  {id:'profile', label:'👤 ข้อมูลส่วนตัว'},
+  {id:'contact', label:'🔗 ติดต่อ & เครื่องมือ'},
+];
+function renderTabs(){
+  $('tabs').innerHTML = TABS.map(t=>`<button class="${t.id===tab?'on':''}" data-t="${t.id}">${t.label}${t.count?`<small>${t.count()}</small>`:''}</button>`).join('') +
+    `<div class="hint">แก้เสร็จแล้วกด <b style="color:var(--acc)">บันทึก</b> มุมขวาบน<br>ระบบสำรองไฟล์เก่าไว้ในโฟลเดอร์ backups ทุกครั้ง</div>`;
+}
+$('tabs').onclick = e=>{ const b=e.target.closest('button'); if(!b) return; tab=b.dataset.t; lastNew=-1; renderTabs(); render(); scrollTo(0,0); };
+
+function render(){ BIND.clear(); ({videos:renderVideos, graphics:renderGraphics, experience:renderExperience, profile:renderProfile, contact:renderContact})[tab](); }
+
+/* ---------- VIDEOS ---------- */
+function renderVideos(){
+  const cats = D.videoCategories;
+  const catOpts = cats.map(c=>({value:c.id,label:c.label}));
+  $('main').innerHTML = `
+    <h1>ผลงานวิดีโอ</h1><p class="sub">วางลิงก์ YouTube แล้วระบบจะดึงชื่อคลิปและภาพปกให้อัตโนมัติ — ลิงก์อื่น (Facebook, TikTok ฯลฯ) ให้อัปโหลดภาพปกเอง</p>
+    <div class="panel"><h3>+ เพิ่มวิดีโอใหม่</h3>
+      <div class="row"><div class="f"><label>ลิงก์วิดีโอ</label><input type="url" id="newUrl" placeholder="https://www.youtube.com/watch?v=..."></div>
+      <button class="btn pri" id="addVid">เพิ่ม</button></div></div>
+    <div class="panel"><h3>หมวดหมู่</h3><div class="chips" id="cats">${cats.map((c,i)=>`<span class="chip"><input value="${esc(c.label)}" data-i="${i}"><button data-del="${i}" title="ลบหมวด">×</button></span>`).join('')}
+      <button class="btn sm" id="addCat">+ หมวดใหม่</button></div></div>
+    <div id="list">${D.videos.length?'':'<div class="empty">ยังไม่มีวิดีโอ</div>'}</div>`;
+  const list = $('list');
+  D.videos.forEach((v,i)=>{
+    const th = v.thumb ? src(v.thumb) : v.source==='youtube' ? `https://i.ytimg.com/vi/${v.id}/mqdefault.jpg` : '';
+    const c = document.createElement('div'); c.className='card'+(i===lastNew?' new':'');
+    c.innerHTML = `
+      <div class="thumb" style="background-image:url('${esc(th)}')">${th?'':'ไม่มีภาพปก'}<button class="btn sm up" data-up>${v.source==='youtube'?'เปลี่ยนปก':'อัปโหลดปก'}</button></div>
+      <div class="fields">
+        ${field(v,'title','ชื่อผลงาน','text',{wide:true})}
+        ${v.source==='youtube' ? field(v,'id','YouTube ID','text') : field(v,'url','ลิงก์','url')}
+        ${v.source==='youtube' ? '' : field(v,'platform','แพลตฟอร์ม','text',{ph:'Facebook'})}
+        ${field(v,'duration','ความยาว','text',{ph:'10:30'})}
+        ${field(v,'category','หมวด','select',{options:[{value:'',label:'— ไม่ระบุ —'},...catOpts]})}
+        ${field(v,'featured','⭐ ผลงานเด่น (การ์ดใหญ่)','check')}
+      </div>
+      <div class="acts"><button class="btn icon" data-m="-1" title="เลื่อนขึ้น">↑</button><button class="btn icon" data-m="1" title="เลื่อนลง">↓</button><button class="btn icon danger" data-del title="ลบ">🗑</button></div>`;
+    c.querySelector('[data-m="-1"]').onclick=()=>move(D.videos,i,-1);
+    c.querySelector('[data-m="1"]').onclick=()=>move(D.videos,i,1);
+    c.querySelector('[data-del]').onclick=()=>del(D.videos,i,'วิดีโอ');
+    c.querySelector('[data-up]').onclick=async()=>{ const [f]=await pickFile(); if(!f) return; try{ v.thumb=await uploadImage(f,'videos',1280); mark(); render(); toast('อัปโหลดภาพปกแล้ว'); }catch(e){toast(e.message,true);} };
+    list.appendChild(c);
+  });
+  $('addVid').onclick = addVideo;
+  $('newUrl').onkeydown = e=>{ if(e.key==='Enter') addVideo(); };
+  $('addCat').onclick = ()=>{ const label=prompt('ชื่อหมวดใหม่ เช่น Music Video'); if(!label) return; D.videoCategories.push({id:label.toLowerCase().replace(/[^a-z0-9ก-๙]+/g,'-')+'-'+Date.now().toString(36).slice(-3), label}); mark(); render(); };
+  $('cats').querySelectorAll('input').forEach(el=>el.oninput=()=>{ D.videoCategories[el.dataset.i].label=el.value; mark(); });
+  $('cats').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ const c=D.videoCategories[b.dataset.del]; const n=D.videos.filter(v=>v.category===c.id).length; if(!confirm(`ลบหมวด "${c.label}"?${n?` (มีวิดีโอ ${n} ชิ้นในหมวดนี้ จะกลายเป็นไม่ระบุหมวด)`:''}`)) return; D.videos.forEach(v=>{ if(v.category===c.id) v.category=''; }); D.videoCategories.splice(b.dataset.del,1); mark(); render(); });
+}
+async function addVideo(){
+  const url = $('newUrl').value.trim(); if(!url) return toast('วางลิงก์ก่อนนะครับ',true);
+  const id = ytId(url);
+  let v;
+  if(id){
+    v = {source:'youtube', id, title:'', duration:'', category:D.videoCategories[0]?.id||''};
+    try{ const r=await fetch('/api/oembed?url='+encodeURIComponent('https://www.youtube.com/watch?v='+id)); const j=await r.json(); if(j.title) v.title=j.title; }catch(e){}
+  } else {
+    if(!/^https?:\/\//.test(url)) return toast('ลิงก์ต้องขึ้นต้นด้วย https://',true);
+    const host = new URL(url).hostname.replace(/^www\.|^m\./,'');
+    v = {source:'link', url, platform: host.includes('facebook')?'Facebook':host.includes('tiktok')?'TikTok':host.includes('instagram')?'Instagram':host.includes('vimeo')?'Vimeo':host, thumb:'', title:'', duration:'', category:D.videoCategories[0]?.id||''};
+  }
+  D.videos.unshift(v); lastNew=0; mark(); render(); toast(id?(v.title?'เพิ่มแล้ว: '+v.title:'เพิ่มแล้ว — ใส่ชื่อคลิปด้วยนะ'):'เพิ่มแล้ว — อัปโหลดภาพปกด้วยนะ');
+}
+
+/* ---------- GRAPHICS ---------- */
+function renderGraphics(){
+  $('main').innerHTML = `
+    <h1>ผลงานกราฟิก</h1><p class="sub">ลากรูปมาวาง หรือคลิกเพื่อเลือกได้หลายรูปพร้อมกัน — ระบบย่อขนาดให้อัตโนมัติ รูปใหม่จะขึ้นเป็นรูปแรก</p>
+    <div class="drop" id="drop"><b>+ ลากรูปมาวางที่นี่</b> หรือคลิกเพื่อเลือกไฟล์</div>
+    <div class="ggrid" id="ggrid">${D.graphics.length?'':'<div class="empty" style="grid-column:1/-1">ยังไม่มีผลงาน</div>'}</div>`;
+  const grid = $('ggrid');
+  D.graphics.forEach((g,i)=>{
+    const c=document.createElement('div'); c.className='gcell';
+    c.innerHTML = `<div class="img" style="background-image:url('${esc(src(g.thumb||g.full))}')"></div>
+      <div class="bar"><button class="btn icon" data-m="-1" title="ย้ายไปก่อนหน้า">←</button><button class="btn icon" data-m="1" title="ย้ายไปถัดไป">→</button><span class="sp"></span><button class="btn icon danger" data-del title="ลบ">🗑</button></div>
+      <input placeholder="ชื่อผลงาน (ไม่บังคับ)" value="${esc(g.title)}">`;
+    c.querySelector('[data-m="-1"]').onclick=()=>move(D.graphics,i,-1);
+    c.querySelector('[data-m="1"]').onclick=()=>move(D.graphics,i,1);
+    c.querySelector('[data-del]').onclick=()=>del(D.graphics,i,'รูป');
+    c.querySelector('input').oninput=e=>{ g.title=e.target.value; mark(); };
+    grid.appendChild(c);
+  });
+  const drop=$('drop');
+  drop.onclick=async()=>addGraphics(await pickFile(true));
+  drop.ondragover=e=>{e.preventDefault();drop.classList.add('over');};
+  drop.ondragleave=()=>drop.classList.remove('over');
+  drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');addGraphics([...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')));};
+}
+async function addGraphics(files){
+  if(!files.length) return;
+  const added=[];
+  for(const [k,f] of files.entries()){
+    $('drop').innerHTML = `กำลังอัปโหลด ${k+1}/${files.length}…`;
+    try{
+      const im=await loadImg(f), name=f.name.replace(/\.[^.]+$/,'')+'.webp';
+      const full=await upload('works',name,resize(im,1800,.88));
+      const thumb=await upload('thumbs',name,resize(im,700,.82));
+      added.push({full,thumb,title:''});
+    }catch(e){ toast(`${f.name}: ${e.message}`,true); }
+  }
+  D.graphics.unshift(...added); mark(); render(); toast(`เพิ่ม ${added.length} รูปแล้ว — อย่าลืมกดบันทึก`);
+}
+
+/* ---------- EXPERIENCE ---------- */
+function renderExperience(){
+  $('main').innerHTML = `
+    <h1>Work History</h1><p class="sub">ประสบการณ์ทำงาน — ตัวเลข "บริษัท" และ "เดือน" บนหน้าเว็บจะคำนวณจากตรงนี้อัตโนมัติ</p>
+    <div class="toolbar"><button class="btn pri" id="addXp">+ เพิ่มประสบการณ์</button></div>
+    <div id="list">${D.experience.length?'':'<div class="empty">ยังไม่มีประสบการณ์</div>'}</div>`;
+  const list=$('list');
+  D.experience.forEach((x,i)=>{
+    const c=document.createElement('div'); c.className='card'+(i===lastNew?' new':'');
+    c.innerHTML = `
+      <div class="thumb sq" style="background-image:url('${esc(src(x.logo))}')">${x.logo?'':'โลโก้'}<button class="btn sm up" data-up>อัปโหลด</button></div>
+      <div class="fields">
+        ${field(x,'company','ชื่อบริษัท / องค์กร')}
+        ${field(x,'role','ตำแหน่ง',undefined,{ph:'Video Editor'})}
+        ${field(x,'type','ประเภท',undefined,{ph:'Full-time / Contract / Internship / Freelance'})}
+        ${field(x,'months','ระยะเวลา (เดือน)','number',{help:'ใช้คำนวณสถิติ เช่น 1 ปี = 12'})}
+        ${field(x,'period','ข้อความแสดงแทน (ไม่บังคับ)',undefined,{ph:'เช่น 2023 – 2024',help:'ว่างไว้ = แสดงจากจำนวนเดือน'})}
+        ${field(x,'link','ลิงก์ (ช่อง / เว็บไซต์)','url')}
+        ${field(x,'desc','รายละเอียดงาน','textarea',{wide:true})}
+      </div>
+      <div class="acts"><button class="btn icon" data-m="-1">↑</button><button class="btn icon" data-m="1">↓</button><button class="btn icon danger" data-del>🗑</button></div>`;
+    c.querySelector('[data-m="-1"]').onclick=()=>move(D.experience,i,-1);
+    c.querySelector('[data-m="1"]').onclick=()=>move(D.experience,i,1);
+    c.querySelector('[data-del]').onclick=()=>del(D.experience,i,'ประสบการณ์');
+    c.querySelector('[data-up]').onclick=async()=>{ const [f]=await pickFile(); if(!f) return; try{ x.logo=await uploadImage(f,'logos',400); mark(); render(); toast('อัปโหลดโลโก้แล้ว'); }catch(e){toast(e.message,true);} };
+    list.appendChild(c);
+  });
+  $('addXp').onclick=()=>{ D.experience.unshift({company:'',role:'',type:'',months:'',period:'',desc:'',logo:'',link:''}); lastNew=0; mark(); render(); };
+}
+
+/* ---------- PROFILE ---------- */
+function listField(arr, holder, label, help){
+  const id='l'+Math.random().toString(36).slice(2,8);
+  BIND.set(id, el=>{ const v=el.value.split(',').map(s=>s.trim()).filter(Boolean); arr.splice(0,arr.length,...v); });
+  return `<div class="f wide"><label for="${id}">${label}</label><input type="text" id="${id}" value="${esc(arr.join(', '))}"><small style="color:var(--mute);font-size:11px">${help||'คั่นด้วยเครื่องหมายจุลภาค ,'}</small></div>`;
+}
+function renderProfile(){
+  const P=D.profile;
+  $('main').innerHTML = `
+    <h1>ข้อมูลส่วนตัว</h1><p class="sub">ข้อความหลักบนหน้าเว็บ</p>
+    <div class="panel"><h3>ส่วนหัว (Hero)</h3><div class="fields">
+      ${field(P,'firstName','ชื่อ (บรรทัดบน)')}${field(P,'lastName','นามสกุล (บรรทัดล่าง ตัวโปร่ง)')}${field(P,'nickname','ชื่อเล่น (โลโก้มุมซ้าย)')}
+      ${field(P,'eyebrow','ข้อความเล็กเหนือชื่อ',undefined,{wide:true})}
+      ${listField(P.roles,null,'ตำแหน่ง / ความถนัด','อันแรกจะเป็นป้ายสีเขียว · คั่นด้วย ,')}
+      ${field(P,'quote','คำคม (อังกฤษ)',undefined,{wide:true})}${field(P,'quoteTh','คำคม (ไทย)',undefined,{wide:true})}
+    </div></div>
+    <div class="panel"><h3>About</h3><div class="fields">
+      ${field(P,'about','ประโยคแนะนำตัว (ตัวใหญ่)','textarea',{wide:true,help:'ครอบคำด้วย [[ ]] = สีเขียว, {{ }} = สีส้ม'})}
+      ${field(P,'aboutSub','รายละเอียดเพิ่มเติม','textarea',{wide:true})}
+    </div></div>
+    <div class="panel"><h3>คำอธิบายแต่ละส่วน</h3><div class="fields">
+      ${field(P,'experienceIntro','Work History','textarea')}${field(P,'videoIntro','Video','textarea')}${field(P,'graphicIntro','Graphic','textarea')}${field(P,'contactText','Contact','textarea')}
+    </div></div>
+    <div class="panel"><h3>แถบตัวอักษรวิ่ง</h3><div class="fields">
+      ${listField(D.marquee1,null,'แถบสีเขียว')}${listField(D.marquee2,null,'แถบสีขาว')}
+    </div></div>`;
+}
+
+/* ---------- CONTACT & TOOLS ---------- */
+function renderContact(){
+  const types=['facebook','instagram','line','youtube','tiktok','email','phone','other'].map(t=>({value:t,label:t}));
+  $('main').innerHTML = `
+    <h1>ติดต่อ & เครื่องมือ</h1><p class="sub">ปุ่มช่องทางติดต่อท้ายเว็บ และโปรแกรมที่ใช้ (แสดงใต้ Work History)</p>
+    <div class="panel"><h3>ช่องทางติดต่อ</h3><div id="soc"></div><button class="btn sm" id="addSoc">+ เพิ่มช่องทาง</button>
+      <p style="color:var(--mute);font-size:12px;margin-top:8px">อีเมลใส่เป็น mailto:you@mail.com · เบอร์โทรใส่เป็น tel:0812345678</p></div>
+    <div class="panel"><h3>โปรแกรมที่ใช้</h3><div id="tl"></div><button class="btn sm" id="addTool">+ เพิ่มโปรแกรม</button></div>`;
+  const soc=$('soc');
+  D.socials.forEach((s,i)=>{ const c=document.createElement('div'); c.className='card'; c.style.gridTemplateColumns='1fr auto';
+    c.innerHTML=`<div class="fields">${field(s,'type','ประเภท','select',{options:types})}${field(s,'label','ข้อความบนปุ่ม')}${field(s,'url','ลิงก์','text')}</div><div class="acts"><button class="btn icon" data-m="-1">↑</button><button class="btn icon" data-m="1">↓</button><button class="btn icon danger" data-del>🗑</button></div>`;
+    c.querySelector('[data-m="-1"]').onclick=()=>move(D.socials,i,-1); c.querySelector('[data-m="1"]').onclick=()=>move(D.socials,i,1); c.querySelector('[data-del]').onclick=()=>del(D.socials,i,'ช่องทาง'); soc.appendChild(c); });
+  const tl=$('tl');
+  D.tools.forEach((t,i)=>{ const c=document.createElement('div'); c.className='card'; c.style.gridTemplateColumns='auto 1fr auto';
+    c.innerHTML=`<div style="width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-weight:700;background:${esc(t.bg)};color:${esc(t.fg)}">${esc(t.abbr)}</div><div class="fields">${field(t,'name','ชื่อโปรแกรม')}${field(t,'abbr','ตัวย่อ (2 ตัว)')}${field(t,'bg','สีพื้น','color')}${field(t,'fg','สีตัวอักษร','color')}</div><div class="acts"><button class="btn icon" data-m="-1">↑</button><button class="btn icon" data-m="1">↓</button><button class="btn icon danger" data-del>🗑</button></div>`;
+    c.querySelector('[data-m="-1"]').onclick=()=>move(D.tools,i,-1); c.querySelector('[data-m="1"]').onclick=()=>move(D.tools,i,1); c.querySelector('[data-del]').onclick=()=>del(D.tools,i,'โปรแกรม'); tl.appendChild(c); });
+  $('addSoc').onclick=()=>{ D.socials.push({type:'other',label:'',url:''}); mark(); render(); };
+  $('addTool').onclick=()=>{ D.tools.push({name:'',abbr:'',bg:'#222222',fg:'#ffffff'}); mark(); render(); };
+}
+
+/* ---------- save / load ---------- */
+async function save(){
+  $('saveBtn').disabled=true; $('status').textContent='กำลังบันทึก…';
+  try{
+    const r=await fetch('/api/data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(D)});
+    const j=await r.json(); if(!r.ok) throw new Error(j.error);
+    dirty=false; $('status').textContent='✓ บันทึกแล้ว '+new Date().toLocaleTimeString('th-TH'); $('status').className='status'; toast('บันทึกแล้ว ✓ เปิด "ดูเว็บ" เพื่อดูผล');
+  }catch(e){ $('saveBtn').disabled=false; $('status').textContent='บันทึกไม่สำเร็จ'; toast('บันทึกไม่สำเร็จ: '+e.message,true); }
+}
+$('saveBtn').onclick=save;
+addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){ e.preventDefault(); if(dirty) save(); } });
+addEventListener('beforeunload',e=>{ if(dirty){ e.preventDefault(); e.returnValue=''; } });
+
+(async()=>{
+  try{ const r=await fetch('/api/data',{cache:'no-store'}); if(!r.ok) throw 0; D=await r.json(); }
+  catch(e){ $('offline').style.display='block'; $('status').textContent='ออฟไลน์'; return; }
+  for(const k of ['videos','graphics','experience','socials','tools','videoCategories','marquee1','marquee2']) D[k] ||= [];
+  D.profile ||= {}; D.profile.roles ||= [];
+  $('status').textContent='พร้อมใช้งาน'; renderTabs(); render();
+})();
+</script>
+</body>
+</html>
